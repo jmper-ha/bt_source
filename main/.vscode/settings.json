@@ -1,0 +1,6 @@
+{
+    "idf.flashType": "UART",
+    "idf.espIdfPath": "/home/jmper/espressif/esp-idf",
+    "idf.toolsPath": "/home/jmper/.espressif",
+    "idf.pythonInstallPath": "/home/jmper/.espressif/python_env/idf5.5_py3.9_env/bin/python"
+}

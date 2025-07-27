@@ -1,0 +1,2 @@
+source /home/jmper/esp32/bt_source/build/gdbinit/symbols
+source /home/jmper/esp32/bt_source/build/gdbinit/connect

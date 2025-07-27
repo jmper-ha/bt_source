@@ -1,0 +1,13 @@
+# Target labels
+ bootloader
+# Source files and their labels
+/home/jmper/esp32/bt_source/build/CMakeFiles/bootloader
+/home/jmper/esp32/bt_source/build/CMakeFiles/bootloader.rule
+/home/jmper/esp32/bt_source/build/CMakeFiles/bootloader-complete.rule
+/home/jmper/esp32/bt_source/build/bootloader-prefix/src/bootloader-stamp/bootloader-build.rule
+/home/jmper/esp32/bt_source/build/bootloader-prefix/src/bootloader-stamp/bootloader-configure.rule
+/home/jmper/esp32/bt_source/build/bootloader-prefix/src/bootloader-stamp/bootloader-download.rule
+/home/jmper/esp32/bt_source/build/bootloader-prefix/src/bootloader-stamp/bootloader-install.rule
+/home/jmper/esp32/bt_source/build/bootloader-prefix/src/bootloader-stamp/bootloader-mkdir.rule
+/home/jmper/esp32/bt_source/build/bootloader-prefix/src/bootloader-stamp/bootloader-patch.rule
+/home/jmper/esp32/bt_source/build/bootloader-prefix/src/bootloader-stamp/bootloader-update.rule
