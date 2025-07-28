@@ -19,7 +19,6 @@
 #include "esp_bt.h"
 #include "bt_app_core.h"
 #include "main.h"
-//#include "i2s_app.h"
 #include "uart_app.h"
 #include "utils.h"
 #include "adc_app.h"
