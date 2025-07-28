@@ -1,25 +1,34 @@
 {
-    "C_Cpp.intelliSenseEngine": "default",
-    "idf.espIdfPath": "/home/jmper/espressif/esp-idf",
-    "idf.pythonInstallPath": "/home/jmper/.espressif/python_env/idf5.5_py3.9_env/bin/python",
-    "idf.espAdfPath": "/home/jmper/.espressif/esp-adf",
-    "idf.openOcdConfigs": [
-        "board/esp32-wrover-kit-3.3v.cfg"
-    ],
-    "idf.port": "/dev/ttyUSB0",
-    "idf.toolsPath": "/home/jmper/.espressif",
-    "files.associations": {
-        "sdkconfig.h": "c",
-        "esp_bt.h": "c",
-        "i2s_app.h": "c",
-        "task.h": "c",
-        "uart.h": "c",
-        "chrono": "c",
-        "text_encoding": "c",
-        "typeinfo": "c",
-        "random": "c",
-        "adc_app.h": "c"
-    },
-    "idf.flashType": "UART",
-    "idf.monitorPort": "/dev/ttyUSB0"
+  "C_Cpp.intelliSenseEngine": "default",
+  "idf.espIdfPath": "/home/jmper/espressif/esp-idf",
+  "idf.pythonInstallPath": "/home/jmper/.espressif/python_env/idf5.5_py3.9_env/bin/python",
+  "idf.espAdfPath": "/home/jmper/.espressif/esp-adf",
+  "idf.openOcdConfigs": [
+    "board/esp32-wrover-kit-3.3v.cfg"
+  ],
+  "idf.port": "/dev/ttyUSB0",
+  "idf.toolsPath": "/home/jmper/.espressif",
+  "files.associations": {
+    "sdkconfig.h": "c",
+    "esp_bt.h": "c",
+    "i2s_app.h": "c",
+    "task.h": "c",
+    "uart.h": "c",
+    "chrono": "c",
+    "text_encoding": "c",
+    "typeinfo": "c",
+    "random": "c",
+    "adc_app.h": "c"
+  },
+  "idf.flashType": "UART",
+  "idf.monitorPort": "/dev/ttyUSB0",
+  "idf.customExtraVars": {
+    "IDF_TARGET": "esp32"
+  },
+  "clangd.path": "/home/jmper/.espressif/tools/esp-clang/esp-18.1.2_20240912/esp-clang/bin/clangd",
+  "clangd.arguments": [
+    "--background-index",
+    "--query-driver=/home/jmper/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20241119/xtensa-esp-elf/bin/xtensa-esp32-elf-gcc",
+    "--compile-commands-dir=/home/jmper/esp32/bt_source/build"
+  ]
 }
