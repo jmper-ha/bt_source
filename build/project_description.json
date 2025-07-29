@@ -1,7 +1,7 @@
 {
     "version":            "1.2",
     "project_name":       "bt_source",
-    "project_version":    "e2faec9-dirty",
+    "project_version":    "cfc9fd8-dirty",
     "project_path":       "/home/jmper/esp32/bt_source",
     "idf_path":           "/home/jmper/espressif/esp-idf",
     "build_dir":          "/home/jmper/esp32/bt_source/build",

@@ -1,11 +1,4 @@
-/* Blink Example
 
-   This example code is in the Public Domain (or CC0 licensed, at your option.)
-
-   Unless required by applicable law or agreed to in writing, this
-   software is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
-   CONDITIONS OF ANY KIND, either express or implied.
-*/
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -519,19 +512,18 @@ void app_main(void){
 
     bt_app_task_start_up();
     i2s_init();
-//    i2s_app_task_start_up();
-
     
     esp_bt_gap_set_device_name(dev_name);
     esp_bt_gap_register_callback(bt_app_gap_cb);
 
- //   esp_avrc_ct_init();
- //   esp_avrc_ct_register_callback(bt_app_rc_ct_cb);
+/*    no need avrc here
+    esp_avrc_ct_init();
+    esp_avrc_ct_register_callback(bt_app_rc_ct_cb);
 
- //   esp_avrc_rn_evt_cap_mask_t evt_set = {0};
- //   esp_avrc_rn_evt_bit_mask_operation(ESP_AVRC_BIT_MASK_OP_SET, &evt_set, ESP_AVRC_RN_VOLUME_CHANGE);
- //   ESP_ERROR_CHECK(esp_avrc_tg_set_rn_evt_cap(&evt_set));
-
+    esp_avrc_rn_evt_cap_mask_t evt_set = {0};
+    esp_avrc_rn_evt_bit_mask_operation(ESP_AVRC_BIT_MASK_OP_SET, &evt_set, ESP_AVRC_RN_VOLUME_CHANGE);
+    ESP_ERROR_CHECK(esp_avrc_tg_set_rn_evt_cap(&evt_set));
+*/
     esp_a2d_source_init();
     esp_a2d_register_callback(&bt_app_a2d_cb);
     esp_a2d_source_register_data_callback(bt_app_a2d_data_cb);
