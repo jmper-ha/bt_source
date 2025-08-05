@@ -29,6 +29,15 @@ typedef enum {
     APP_AUDIO_SPEAKER,
 } audio_m_t;
 
+typedef enum {
+    SR_44100,
+    SR_22050,
+} samplerate_t;
+
+typedef struct {
+    samplerate_t    sr;
+} uart_rx_msg_t;
+
 static const char *TAG = "BT_MAIN";
 static const char *dev_name = "YORADIO_BT";
 

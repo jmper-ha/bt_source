@@ -5,6 +5,7 @@
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 #include "freertos/ringbuf.h"
+#include "freertos/queue.h"
 #include "nvs.h"
 #include "nvs_flash.h"
 #include "esp_log.h"
@@ -28,7 +29,7 @@
 
 static TaskHandle_t     s_i2s_app_task_handler = NULL;
 static RingbufHandle_t  i2s_buf = NULL;
-
+static QueueHandle_t    uart_rx_queue;
 i2s_chan_handle_t       rx_chan;
 
 arr_t   eir_saved;
@@ -54,7 +55,7 @@ static void gpio_init(void){
 
 void i2s_app_task_start_up(void)
 {
-    i2s_buf = xRingbufferCreateNoSplit( 512, 16);
+    i2s_buf = xRingbufferCreateNoSplit( I2S_RINGBUF_SIZE, 16);
     xTaskCreatePinnedToCore( i2s_app_task_handler, "I2SAppTask", 4096, NULL, configMAX_PRIORITIES - 3, &s_i2s_app_task_handler, tskNO_AFFINITY );
 }
 
@@ -65,6 +66,7 @@ static void i2s_init(void)
 
     i2s_std_config_t rx_std_cfg = {
         .clk_cfg  = I2S_STD_CLK_DEFAULT_CONFIG(44100),
+//        .clk_cfg  = I2S_STD_CLK_DEFAULT_CONFIG(22050),
         .slot_cfg = I2S_STD_PHILIPS_SLOT_DEFAULT_CONFIG(I2S_DATA_BIT_WIDTH_16BIT, I2S_SLOT_MODE_STEREO),
         .gpio_cfg = {
             .mclk = I2S_GPIO_UNUSED,
@@ -87,17 +89,36 @@ static void i2s_init(void)
 
 static void i2s_app_task_handler(void *arg)
 {
-	size_t bytes_read = 0;
-	unsigned char* mem = malloc( 512*2 );
+	size_t          bytes_read = 0;
+    uart_rx_msg_t   msg;
+    samplerate_t    samplerate = SR_44100;
+
+	unsigned char* in_mem = malloc( I2S_RINGBUF_SIZE/2 );
+    unsigned char* out_mem = malloc( I2S_RINGBUF_SIZE );
 	
-	if( !mem ){
+	if( !in_mem){
 		printf(" i2s0 task malloc err\n ");
 		for(;;)vTaskDelay( 1000 / portTICK_PERIOD_MS );
 	}
 	for(;;){
-		if( i2s_channel_read( rx_chan, mem, I2S_RINGBUF_SIZE, &bytes_read, portMAX_DELAY ) )printf("i2s0 read err\n");
-		if( xRingbufferSend( i2s_buf, mem, I2S_RINGBUF_SIZE, portMAX_DELAY ) == pdFALSE )printf("i2s0 ringBufferSend err\n");
-	}
+        if(xQueueReceive(uart_rx_queue, &msg, 0)){
+            if(samplerate != msg.sr) samplerate = msg.sr;
+        }
+        if(samplerate == SR_44100){
+    		if( i2s_channel_read( rx_chan, out_mem, I2S_RINGBUF_SIZE, &bytes_read, portMAX_DELAY ) )printf("i2s0 read err\n");
+    		if( xRingbufferSend( i2s_buf, out_mem, I2S_RINGBUF_SIZE, portMAX_DELAY ) == pdFALSE )printf("i2s0 ringBufferSend err\n");
+        } else {
+            if( i2s_channel_read( rx_chan, in_mem, I2S_RINGBUF_SIZE/2, &bytes_read, portMAX_DELAY ) )printf("i2s0 read err\n");
+            for(uint16_t i=0; i<bytes_read;i+=2){
+    //            uint16_t tmp = ((in_mem[i]<<8|in_mem[i+1])+(in_mem[i+2]<<8|in_mem[i+3]))/2;
+                out_mem[2*i] = in_mem[i];
+                out_mem[2*i+1] = in_mem[i+1];
+                out_mem[2*i+2] = in_mem[i];//0;//tmp>>8;
+                out_mem[2*i+3] = in_mem[i+1];//0;//0x0f&tmp;             
+            }
+        if( xRingbufferSend( i2s_buf, out_mem, I2S_RINGBUF_SIZE, portMAX_DELAY ) == pdFALSE )printf("i2s0 ringBufferSend err\n");
+        }
+    }
 }
 
 static int32_t bt_app_a2d_data_cb(uint8_t *data, int32_t len)
@@ -122,8 +143,8 @@ static int32_t bt_app_a2d_data_cb(uint8_t *data, int32_t len)
 
 static void bt_app_gap_cb(esp_bt_gap_cb_event_t event, esp_bt_gap_cb_param_t *param)
 {
-    if(event>0)
-        ESP_LOGI(TAG, "%s event: %d a2d_state: %d", __func__, event,s_a2d_state);
+//    if(event>0)
+//        ESP_LOGI(TAG, "%s event: %d a2d_state: %d", __func__, event,s_a2d_state);
     switch (event) {
     case ESP_BT_GAP_DISC_RES_EVT: {
         if (s_a2d_state == APP_AV_STATE_DISCOVERING) 
@@ -131,7 +152,7 @@ static void bt_app_gap_cb(esp_bt_gap_cb_event_t event, esp_bt_gap_cb_param_t *pa
         break;
     }
     case ESP_BT_GAP_DISC_STATE_CHANGED_EVT: {
-        ESP_LOGI(TAG, "%s param->disc_st_chg.state: %d a2d_state: %d", __func__, param->disc_st_chg.state,s_a2d_state);
+//        ESP_LOGI(TAG, "%s param->disc_st_chg.state: %d a2d_state: %d", __func__, param->disc_st_chg.state,s_a2d_state);
         if (param->disc_st_chg.state == ESP_BT_GAP_DISCOVERY_STOPPED) {
             if (s_a2d_state == APP_AV_STATE_DISCOVERED) {
                 s_a2d_state = APP_AV_STATE_CONNECTING;
@@ -435,6 +456,12 @@ void uart_hdl_evt(uint16_t event, void *p_param)
             save_eir();
         }
         break;
+    case APP_UART_I2S_PARAM:
+        uart_rx_msg_t msg;
+        if(!strncmp(comm_suf+1,"44100",5))  msg.sr = SR_44100;
+        else                                msg.sr = SR_22050;
+        xQueueSend(uart_rx_queue, &msg, 0);//portMAX_DELAY);//
+        break;
     default:
         ESP_LOGE(TAG, "%s unhandled command: %d", __func__, comm);
         break;
@@ -486,7 +513,7 @@ void app_main(void){
 
     gpio_init();
     audio_output(APP_AUDIO_SPEAKER);
-
+    uart_rx_queue = xQueueCreate( 5, sizeof(uart_rx_msg_t) );
     uart_init();
     get_saved_eir();
 
@@ -510,9 +537,11 @@ void app_main(void){
     esp_bt_pin_code_t pin_code;
     esp_bt_gap_set_pin(pin_type, 0, pin_code);
 
+    
     bt_app_task_start_up();
     i2s_init();
     
+
     esp_bt_gap_set_device_name(dev_name);
     esp_bt_gap_register_callback(bt_app_gap_cb);
 

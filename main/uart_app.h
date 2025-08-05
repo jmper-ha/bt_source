@@ -10,6 +10,7 @@ enum {
     APP_UART_DISCONNECT,
     APP_UART_FORGET_SINK,
     APP_UART_PIN_SINK,
+    APP_UART_I2S_PARAM,
 };
 
 void uart_init(void);

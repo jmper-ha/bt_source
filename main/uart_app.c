@@ -70,7 +70,7 @@ static void tx_task(void *arg){
     while (1){
         if(xQueueReceive(uart_tx_queue, &msg, 0)){
             uart_write_bytes(UART_NUM_1, msg.data, msg.data_len);
-            ESP_LOGI("UART_TX","%s DATA sent %s", __func__,msg.data);
+//            ESP_LOGI("UART_TX","%s DATA sent %s", __func__,msg.data);
             free(msg.data);
             vTaskDelay(250 / portTICK_PERIOD_MS);
         }
