@@ -1,1 +1,0 @@
-Command: cmake -G Ninja -DPYTHON_DEPS_CHECKED=1 -DPYTHON=/home/jmper/.espressif/python_env/idf5.5_py3.9_env/bin/python -DESP_PLATFORM=1 -DSDKCONFIG='/home/jmper/esp32/bt_source/sdkconfig' -DCCACHE_ENABLE=0 /home/jmper/esp32/bt_source

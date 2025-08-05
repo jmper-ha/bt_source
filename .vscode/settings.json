@@ -18,7 +18,8 @@
     "text_encoding": "c",
     "typeinfo": "c",
     "random": "c",
-    "adc_app.h": "c"
+    "adc_app.h": "c",
+    "format": "c"
   },
   "idf.flashType": "UART",
   "idf.monitorPort": "/dev/ttyUSB0",
