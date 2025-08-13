@@ -1,5 +1,5 @@
 
-# BT_Sousce for Yoradio_mod
+# BT_Source for Yoradio_mod
 
 Based in ESP32 WROOM
 
