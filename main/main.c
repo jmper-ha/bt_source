@@ -116,7 +116,7 @@ static void i2s_app_task_handler(void *arg)
                 out_mem[2*i+2] = in_mem[i];//0;//tmp>>8;
                 out_mem[2*i+3] = in_mem[i+1];//0;//0x0f&tmp;             
             }
-        if( xRingbufferSend( i2s_buf, out_mem, I2S_RINGBUF_SIZE, portMAX_DELAY ) == pdFALSE )printf("i2s0 ringBufferSend err\n");
+            if( xRingbufferSend( i2s_buf, out_mem, I2S_RINGBUF_SIZE, portMAX_DELAY ) == pdFALSE )printf("i2s0 ringBufferSend err\n");
         }
     }
 }
