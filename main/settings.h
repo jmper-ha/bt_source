@@ -2,15 +2,20 @@
 #define __SETTINGS_H__
 
 // AUDIO
-#define STD_BCLK            GPIO_NUM_26
-#define STD_WS              GPIO_NUM_25
-#define STD_DIN             GPIO_NUM_27
+#define STD_BCLK            GPIO_NUM_26 
+#define STD_WS              GPIO_NUM_25 
+#define STD_DIN             GPIO_NUM_27 
 #define A_MUTE              GPIO_NUM_23
+#define PIN_RESET           GPIO_NUM_32
+
+#define OUT_BCLK            GPIO_NUM_22
+#define OUT_WS              GPIO_NUM_21
+#define OUT_DIN             GPIO_NUM_33
 
 //UART
-#define TXD_PIN             GPIO_NUM_4
-#define RXD_PIN             GPIO_NUM_5
-#define BAUD_RATE           115200
+#define TXD_PIN             GPIO_NUM_4 
+#define RXD_PIN             GPIO_NUM_5 
+#define BAUD_RATE           460800 //115200 //230400 //
 
 //ADC
 #define R1                  47

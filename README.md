@@ -1,7 +1,14 @@
 
 # BT_Sousce for Yoradio_mod
-
 Based in ESP32 WROOM
+## Version history
+##### v1
+Initial version. 
+* BT Sourse mode. 
+* Battery monitor
+##### v2
+* Added sink mode
+* AVRCP control in both modes
 
 ## Connections
 ### I2S

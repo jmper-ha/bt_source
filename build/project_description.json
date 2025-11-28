@@ -1,7 +1,7 @@
 {
     "version":            "1.2",
     "project_name":       "bt_source",
-    "project_version":    "451a139-dirty",
+    "project_version":    "858aae9-dirty",
     "project_path":       "/home/jmper/esp32/bt_source",
     "idf_path":           "/home/jmper/espressif/esp-idf",
     "build_dir":          "/home/jmper/esp32/bt_source/build",
@@ -11,7 +11,7 @@
     "app_elf":            "bt_source.elf",
     "app_bin":            "bt_source.bin",
     "build_type":         "flash_app",
-    "git_revision":       "v5.5-dev-2488-gee77c489e7-dirty",
+    "git_revision":       "v5.5-dev-2489-g6196f28c5a",
     "target":             "esp32",
     "rev":                "0",
     "min_rev":            "0",
@@ -190,7 +190,7 @@
             "managed_reqs": [],
             "managed_priv_reqs": [],
             "file": "/home/jmper/esp32/bt_source/build/esp-idf/esp_coex/libesp_coex.a",
-            "sources": [ "/home/jmper/espressif/esp-idf/components/esp_coex/src/coexist.c", "/home/jmper/espressif/esp-idf/components/esp_coex/src/lib_printf.c", "/home/jmper/espressif/esp-idf/components/esp_coex/esp32/esp_coex_adapter.c", "/home/jmper/espressif/esp-idf/components/esp_coex/src/coexist_debug_diagram.c", "/home/jmper/espressif/esp-idf/components/esp_coex/src/coexist_debug.c" ],
+            "sources": [ "/home/jmper/espressif/esp-idf/components/esp_coex/esp32/esp_coex_adapter.c", "/home/jmper/espressif/esp-idf/components/esp_coex/src/coexist_debug_diagram.c", "/home/jmper/espressif/esp-idf/components/esp_coex/src/coexist_debug.c" ],
             "include_dirs": [ "include" ]
         },
         "esp_common": {
@@ -835,7 +835,7 @@
             "managed_reqs": [],
             "managed_priv_reqs": [],
             "file": "/home/jmper/esp32/bt_source/build/esp-idf/main/libmain.a",
-            "sources": [ "/home/jmper/esp32/bt_source/main/adc_app.c", "/home/jmper/esp32/bt_source/main/utils.c", "/home/jmper/esp32/bt_source/main/uart_app.c", "/home/jmper/esp32/bt_source/main/main.c", "/home/jmper/esp32/bt_source/main/bt_app_core.c" ],
+            "sources": [ "/home/jmper/esp32/bt_source/main/bt_app_avrc_ct.c", "/home/jmper/esp32/bt_source/main/bt_app_avrc_tg.c", "/home/jmper/esp32/bt_source/main/main.c", "/home/jmper/esp32/bt_source/main/bt_app_core.c", "/home/jmper/esp32/bt_source/main/uart_app.c", "/home/jmper/esp32/bt_source/main/utils.c", "/home/jmper/esp32/bt_source/main/adc_app.c" ],
             "include_dirs": [ "." ]
         },
         "mbedtls": {

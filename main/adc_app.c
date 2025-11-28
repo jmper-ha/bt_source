@@ -124,7 +124,7 @@ void send_data(int volt){
 //    printf("raw: %d filter: %d volt: %3.2f filter: %3.2f ",bat_voltage_mv,bat_filtered_mv,(float)bat_voltage_mv/1000,filtered_mv/1000);
 //    printf("persent: %d filter: %d, diff: %ld charge %d\n",percent(bat_voltage_mv),percent((uint16_t)filtered_mv),diff,check_charge());
     uint16_t prs = (check_charge()<<8)|percent(bat_filtered_mv);    
-    sprintf(batt,"4:%d:%d",bat_filtered_mv,prs);
+    sprintf(batt,"%d:%d:%d",APP_UART_SEND_BATTERY,bat_filtered_mv,prs);
     uart_send_data(batt);
     free(batt);
 }
